@@ -67,3 +67,26 @@ def get_employee(
         )
 
     return employee
+
+@router.put(
+    "/{employee_id}",
+    response_model=EmployeeResponse
+)
+def update_employee(
+    employee_id: int,
+    employee: EmployeeCreate,
+    db: Session = Depends(get_db)
+):
+    updated_employee = crud.update_employee(
+        db,
+        employee_id,
+        employee
+    )
+
+    if updated_employee is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Employee not found"
+        )
+
+    return updated_employee

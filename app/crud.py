@@ -30,3 +30,21 @@ def get_employees(db):
 
 def get_employee(db, employee_id):
     return db.query(Employee).filter(Employee.id == employee_id).first()
+
+def update_employee(db, employee_id, employee_data):
+    employee = db.query(Employee).filter(
+        Employee.id == employee_id
+    ).first()
+
+    if employee is None:
+        return None
+
+    employee.name = employee_data.name
+    employee.email = employee_data.email
+    employee.department = employee_data.department
+    employee.salary = employee_data.salary
+
+    db.commit()
+    db.refresh(employee)
+
+    return employee
