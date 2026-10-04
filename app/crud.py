@@ -27,3 +27,6 @@ def create_employee(
 
 def get_employees(db):
     return db.query(Employee).all()
+
+def get_employee(db, employee_id):
+    return db.query(Employee).filter(Employee.id == employee_id).first()
