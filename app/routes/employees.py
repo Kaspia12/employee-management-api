@@ -90,3 +90,12 @@ def update_employee(
         )
 
     return updated_employee
+
+@router.delete("/{employee_id}", response_model=EmployeeResponse)
+def delete_employee(employee_id: int, db: Session = Depends(get_db)):
+    deleted_employee = crud.delete_employee(db, employee_id)
+
+    if deleted_employee is None:
+        raise HTTPException(status_code=404, detail="Employee not found")
+
+    return deleted_employee

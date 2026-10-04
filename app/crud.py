@@ -48,3 +48,16 @@ def update_employee(db, employee_id, employee_data):
     db.refresh(employee)
 
     return employee
+
+def delete_employee(db, employee_id):
+    employee = db.query(Employee).filter(
+        Employee.id == employee_id
+    ).first()
+
+    if employee is None:
+        return None
+
+    db.delete(employee)
+    db.commit()
+
+    return employee
