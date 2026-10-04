@@ -37,3 +37,11 @@ def create_employee(
         db,
         employee
     )
+@router.get(
+    "/",
+    response_model=list[EmployeeResponse]
+)
+def get_employees(
+    db: Session = Depends(get_db)
+):
+    return crud.get_employees(db)
